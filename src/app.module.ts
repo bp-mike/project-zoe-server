@@ -21,6 +21,7 @@ import { HelpModule } from "./help/help.module";
 import { TenantsModule } from "./tenants/tenants.module";
 import { JwtTenantHeaderMiddleware } from "./middleware/jwtTenantHeader.middleware";
 import { ReportsModule } from "./reports/reports.module";
+import { GivingModule } from "./giving/giving.module";
 
 @Global()
 @Module({
@@ -50,6 +51,7 @@ import { ReportsModule } from "./reports/reports.module";
     HelpModule,
     TenantsModule,
     ReportsModule,
+    GivingModule,
   ],
   exports: [AppService],
   controllers: [AuthController],

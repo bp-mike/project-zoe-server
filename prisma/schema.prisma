@@ -241,6 +241,45 @@ model user {
   roles     String
   isActive  Boolean
   contact   contact @relation(fields: [contactId], references: [id])
+  giving_number giving_number[]
+  giving_record giving_record[]
+}
+
+// ==========================================================
+// Giving and donations models
+// ==========================================================
+model giving_category {
+  id            Int             @id @default(autoincrement())
+  name          String          @db.VarChar(100)
+  description   String          @db.VarChar(500)
+  prefix        String?         @db.VarChar(10)
+  giving_number giving_number[]
+  giving_record giving_record[]
+}
+
+model giving_number {
+  id               Int             @id @default(autoincrement())
+  number           String          @db.VarChar(20)
+  userId           Int
+  givingCategoryId Int
+  createdAt        DateTime        @default(now()) @db.Timestamp(6)
+  updatedAt        DateTime?       @updatedAt @db.Timestamp(6)
+  user             user            @relation(fields: [userId], references: [id])
+  givingCategory   giving_category @relation(fields: [givingCategoryId], references: [id])
+  giving_record    giving_record[]
+}
+
+model giving_record {
+  id             Int             @id @default(autoincrement())
+  amount         Float
+  userId         Int
+  categoryId     Int
+  givingNumberId Int
+  createdAt      DateTime        @default(now()) @db.Timestamp(6)
+  updatedAt      DateTime?       @updatedAt @db.Timestamp(6)
+  user           user            @relation(fields: [userId], references: [id])
+  category       giving_category @relation(fields: [categoryId], references: [id])
+  givingNumber   giving_number   @relation(fields: [givingNumberId], references: [id])
 }
 
 enum address_category_enum {
